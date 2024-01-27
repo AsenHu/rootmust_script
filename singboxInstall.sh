@@ -30,4 +30,20 @@ groupadd --system sing-box
 useradd --system --gid sing-box --create-home --home-dir /var/lib/sing-box --shell /usr/sbin/nologin sing-box
 
 curl -o /usr/local/bin/sing-box $github/AsenHu/sing-box/releases/download/with_quic/sing-box-linux-amd64-v$microArch
-# curl -o /etc/systemd/system/sing-box.service $raw/AsenHu//master/init/sing-box.service
+curl -o /etc/systemd/system/sing-box.service $raw/AsenHu/rootmust_script/main/systemd/sing-box.service
+
+chmod +x /usr/local/bin/sing-box
+
+if [ ! -f /usr/local/etc/sing-box/config.json ]
+then
+    echo -e '{}' > /usr/local/etc/sing-box/config.json
+fi
+if ! /usr/local/bin/sing-box check --config /usr/local/etc/sing-box/config.json
+then
+    mv -b /usr/local/etc/sing-box/config.json /usr/local/etc/sing-box/config.json.bad
+    echo -e '{}' > /usr/local/etc/sing-box/config.json
+fi
+
+systemctl daemon-reload
+systemctl enable sing-box
+systemctl restart sing-box
