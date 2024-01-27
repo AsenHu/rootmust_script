@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# 设置反向代理
 github=https://github.com/
 raw=https://raw.githubusercontent.com/
 
@@ -11,6 +12,7 @@ curl() {
     fi
 }
 
+# 检测微架构
 case $(lscpu) in
     *avx512*)
         microArch=4
@@ -26,6 +28,7 @@ case $(lscpu) in
         ;;
 esac
 
+# 安装 sing-box
 groupadd --system sing-box
 useradd --system --gid sing-box --create-home --home-dir /var/lib/sing-box --shell /usr/sbin/nologin sing-box
 
@@ -34,6 +37,7 @@ curl -o /etc/systemd/system/sing-box.service $raw/AsenHu/rootmust_script/main/sy
 
 chmod +x /usr/local/bin/sing-box
 
+# 配置 sing-box
 if [ ! -f /usr/local/etc/sing-box/config.json ]
 then
     echo -e '{}' > /usr/local/etc/sing-box/config.json
@@ -44,6 +48,7 @@ then
     echo -e '{}' > /usr/local/etc/sing-box/config.json
 fi
 
+# 启动 sing-box
 systemctl daemon-reload
 systemctl enable sing-box
 systemctl restart sing-box

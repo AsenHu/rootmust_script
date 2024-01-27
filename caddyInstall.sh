@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# 设置反向代理
 github=https://github.com/
 raw=https://raw.githubusercontent.com/
 
@@ -11,6 +12,7 @@ curl() {
     fi
 }
 
+# 检测微架构
 case $(lscpu) in
     *avx512*)
         microArch=4
@@ -26,6 +28,7 @@ case $(lscpu) in
         ;;
 esac
 
+# 安装 caddy
 groupadd --system caddy
 useradd --system --gid caddy --create-home --home-dir /var/lib/caddy --shell /usr/sbin/nologin --comment "Caddy web server" caddy
 
@@ -34,6 +37,7 @@ curl -o /etc/systemd/system/caddy.service $raw/caddyserver/dist/master/init/cadd
 
 chmod +x /usr/bin/caddy
 
+# 配置 caddy
 mkdir -p /etc/caddy
 if [ ! -f /etc/caddy/Caddyfile ]
 then
@@ -45,6 +49,7 @@ then
     echo -e ':2077\nrespond "Hello, world!"' > /etc/caddy/Caddyfile
 fi
 
+# 启动 caddy
 systemctl daemon-reload
 systemctl enable caddy
 systemctl restart caddy
