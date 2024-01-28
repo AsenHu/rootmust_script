@@ -38,6 +38,7 @@ curl -o /etc/systemd/system/sing-box.service $raw/AsenHu/rootmust_script/main/sy
 chmod +x /usr/local/bin/sing-box
 
 # 配置 sing-box
+mkdir -p /usr/local/etc/sing-box/
 if [ ! -f /usr/local/etc/sing-box/config.json ]
 then
     echo -e '{}' > /usr/local/etc/sing-box/config.json
