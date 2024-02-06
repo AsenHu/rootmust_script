@@ -32,8 +32,8 @@ esac
 groupadd --system sing-box
 useradd --system --gid sing-box --create-home --home-dir /var/lib/sing-box --shell /usr/sbin/nologin sing-box
 
-# curl -o /usr/local/bin/sing-box $github/AsenHu/sing-box/releases/download/with_quic/sing-box-linux-amd64-v$microArch
-# curl -o /etc/systemd/system/sing-box.service $raw/AsenHu/rootmust_script/main/systemd/sing-box.service
+curl -o /usr/local/bin/sing-box $github/AsenHu/box_builder/releases/download/quic/sing-box-linux-amd64-v$microArch
+curl -o /etc/systemd/system/sing-box.service $raw/AsenHu/rootmust_script/main/systemd/sing-box.service
 
 chmod +x /usr/local/bin/sing-box
 
