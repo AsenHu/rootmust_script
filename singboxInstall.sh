@@ -28,11 +28,15 @@ case $(lscpu) in
         ;;
 esac
 
+# 安装 xz
+apt update
+apt install xz-utils -y
+
 # 安装 sing-box
 groupadd --system sing-box
 useradd --system --gid sing-box --create-home --home-dir /var/lib/sing-box --shell /usr/sbin/nologin sing-box
 
-curl -o /usr/local/bin/sing-box $github/AsenHu/box_builder/releases/download/quic/sing-box-linux-amd64-v$microArch
+curl $github/AsenHu/box_builder/releases/download/quic/sing-box-linux-amd64-v$microArch.xz | xz -d > /usr/local/bin/sing-box
 curl -o /etc/systemd/system/sing-box.service $raw/AsenHu/rootmust_script/main/systemd/sing-box.service
 
 chmod +x /usr/local/bin/sing-box
